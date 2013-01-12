@@ -16,3 +16,20 @@
 ;; along with path-util. If not, see <http://www.gnu.org/licenses/>.
 ;;
 ;; Path handling utilities
+
+(defun path-util-root-base-name (path)
+  "Return the root-name (w/o extension) of the base-name (last
+component) of PATH"
+  (file-name-sans-extension (file-name-nondirectory path)))
+
+(defun path-util-pop (path &optional count)
+  "Pop COUNT levels from PATH. COUNT defaults to 1"
+  (let ((count (or count 1)))
+    (while (>= (setq count (1- count)) 0)
+      (setq path (directory-file-name (file-name-directory path))))
+    path))
+
+(defun path-util-join (&rest paths)
+  "Join strings in PATHS with a direcory separator in between each
+element."
+  (mapconcat #'identity paths "/"))

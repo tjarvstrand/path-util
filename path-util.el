@@ -33,3 +33,5 @@ component) of PATH"
   "Join strings in PATHS with a direcory separator in between each
 element."
   (mapconcat #'identity paths "/"))
+
+(provide 'path-util)

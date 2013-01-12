@@ -1,0 +1,7 @@
+## Summary ##
+A package for portable handling of paths.
+
+## License ##
+Copyright (C) 2012 by Thomas Järvstrand
+
+path-util is licensed under the Gnu General Public License.

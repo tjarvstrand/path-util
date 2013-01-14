@@ -17,6 +17,10 @@
 ;;
 ;; Path handling utilities
 
+(defun path-util-dir-name (path)
+  "Return the file-name of PATH's directory (no trailing separator)."
+  (directory-file-name (file-name-non-directory (path))))
+
 (defun path-util-root-base-name (path)
   "Return the root-name (w/o extension) of the base-name (last
 component) of PATH"

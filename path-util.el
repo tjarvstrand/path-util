@@ -46,10 +46,14 @@ foo      -> nil
     (when dir
       (directory-file-name dir))))
 
+(defun path-util-base-name (path)
+  "Return the base-name (last component) of PATH."
+  (file-name-nondirectory (directory-file-name path)))
+
 (defun path-util-root-base-name (path)
   "Return the root-name (w/o extension) of the base-name (last
 component) of PATH"
-  (file-name-sans-extension (file-name-nondirectory path)))
+  (file-name-sans-extension (path-util-base-name path)))
 
 (defun path-util-pop (path &optional count)
   "Pop COUNT levels from PATH. COUNT defaults to 1"
@@ -84,10 +88,8 @@ path before returning."
 (when (member 'ert features)
 
   (ert-deftest path-util-file-in-dir-p-test ()
-    (should
-     (not (null (path-util-file-in-dir-p "/foo" "/foo/bar/baz.el"))))
-    (should
-     (not (path-util-file-in-dir-p "/bar" "/foo/bar/baz.el"))))
+    (should (path-util-file-in-dir-p "/foo/bar/baz.el" "/foo"))
+    (should-not (path-util-file-in-dir-p "/foo/bar/baz.el" "/bar")))
 
   (ert-deftest path-util-normalize-test ()
     (let ((dir (directory-file-name default-directory)))

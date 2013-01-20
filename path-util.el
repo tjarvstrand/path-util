@@ -3,16 +3,16 @@
 ;; This file is part of path-util.
 ;;
 ;; path-util is free software: you can redistribute it and/or modify
-;; it under the terms of the GNU Lesser General Public License as published by
+;; it under the terms of the GNU General Public License as published by
 ;; the Free Software Foundation, either version 3 of the License, or
 ;; (at your option) any later version.
 ;;
 ;; path-util is distributed in the hope that it will be useful,
 ;; but WITHOUT ANY WARRANTY; without even the implied warranty of
 ;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-;; GNU Lesser General Public License for more details.
+;; GNU General Public License for more details.
 ;;
-;; You should have received a copy of the GNU Lesser General Public License
+;; You should have received a copy of the GNU General Public License
 ;; along with path-util. If not, see <http://www.gnu.org/licenses/>.
 ;;
 ;; Path handling utilities
@@ -29,7 +29,6 @@ and does not require that FILE or DIRECTORY exist."
 (defun path-util-normalize (path)
   "Expands PATH, replaces duplicate /'s and ensures that its formatted
 as a directory-name."
-                   (expand-file-name (replace-regexp-in-string "//+" "/" path))))
   (file-name-as-directory
    (expand-file-name (replace-regexp-in-string "//+" "/" path))))
 
@@ -121,6 +120,6 @@ path before returning."
     (should-not (path-util--remove-keyword-params '(:foo bar)))
     (should (equal '(a) (path-util--remove-keyword-params '(a :foo bar))))
     (should (equal '(a) (path-util--remove-keyword-params '(:foo bar a))))
-    (should (equal '(a a) (path-util--remove-keyword-params '(a :foo bar a))))))
+    (should (equal '(a a) (path-util--remove-keyword-params '(a :foo bar a)))))
 
 (provide 'path-util)

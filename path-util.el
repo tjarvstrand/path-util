@@ -92,7 +92,7 @@ path before returning."
     (should-not (path-util-file-in-dir-p "/foo/bar/baz.el" "/bar")))
 
   (ert-deftest path-util-normalize-test ()
-    (let ((dir (directory-file-name default-directory)))
+    (let ((dir (expand-file-name (directory-file-name default-directory))))
       (should (string= (path-util-join dir "foo/bar/")
                        (path-util-normalize "foo//bar")))))
 
@@ -111,11 +111,12 @@ path before returning."
     (should (string= "foo/bar" (path-util-join "foo" "bar")))
     (should (string= "foo/bar" (path-util-join "foo" "bar")))
     (should (string= "foo//bar" (path-util-join "foo/" "bar")))
-    (should (string= (directory-file-name default-directory)
-                     (path-util-join "" :expand t)))
-    (should-not (path-util-join nil :expand t)))
+    (should (string=
+             (expand-file-name (directory-file-name default-directory))
+             (path-util-join "" :expand t)))
+    (should-not (path-util-join nil :expand t))
     (should (string= (concat (expand-file-name "~") "/foo")
-                     (path-util-join "~" "foo" :expand t)))
+                     (path-util-join "~" "foo" :expand t))))
 
   (ert-deftest path-util--remove-keyword-params-test ()
     (should-not (path-util--remove-keyword-params nil))

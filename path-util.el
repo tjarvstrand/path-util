@@ -19,6 +19,9 @@
 
 (require 'cl)
 
+(defconst path-util-sep "/"
+  "The directory separator to use. Hardcoded for now.")
+
 (defun path-util-file-in-dir-p (file dir)
   "Return non-nil of file is located in DIR or a subdirectory of DIR.
 Unlike `file-in-directory-p', this function does not derefence symlinks
@@ -30,7 +33,8 @@ and does not require that FILE or DIRECTORY exist."
   "Expands PATH, replaces duplicate /'s and ensures that its formatted
 as a directory-name."
   (file-name-as-directory
-   (expand-file-name (replace-regexp-in-string "//+" "/" path))))
+   (expand-file-name
+    (replace-regexp-in-string (concat path-util-sep "+") path-util-sep path))))
 
 
 (defun path-util-dir-name (path)
@@ -62,17 +66,24 @@ component) of PATH"
       (setq path (directory-file-name (file-name-directory path))))
     path))
 
-(defun* path-util-join (&rest paths &key (expand nil) &allow-other-keys)
-  "Join strings in PATHS with a direcory separator in between each
+(defun* path-util-join (&rest paths
+                        &key (expand nil as-dir nil)
+                        &allow-other-keys)
+  "Join strings in PATHS with a directory separator in between each
 element.
 
 If keyword :expand is non-nil, call `expand-file-name' on the resulting
-path before returning."
+path before returning.
+
+If keyword :as-dir is non-nil, return result as a directory name, ie.
+add a trailing directory separator)."
   (when (setq paths (delq nil (path-util--remove-keyword-params paths)))
     (let* ((res (mapconcat #'identity paths "/")))
-      (if expand
-          (expand-file-name res)
-        res))))
+      (when expand
+        (setq res (expand-file-name res)))
+      (when as-dir
+        (setq res (concat res "/")))
+      res)))
 
 (defun path-util--remove-keyword-params (seq)
   (let ((res nil))

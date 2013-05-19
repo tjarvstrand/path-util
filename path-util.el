@@ -34,7 +34,11 @@ and does not require that FILE or DIRECTORY exist."
 as a directory-name."
   (file-name-as-directory
    (expand-file-name
-    (replace-regexp-in-string (concat path-util-sep "+") path-util-sep path))))
+    (path-util-ensure-single-seps path))))
+
+(defun path-util-ensure-single-seps (path)
+  "Remove duplicate directory sepators in PATH."
+  (replace-regexp-in-string (concat path-util-sep "+") path-util-sep path))
 
 
 (defun path-util-dir-name (path)
@@ -83,7 +87,7 @@ add a trailing directory separator)."
         (setq res (expand-file-name res)))
       (when as-dir
         (setq res (concat res "/")))
-      res)))
+      (path-util-ensure-single-seps res))))
 
 (defun path-util--remove-keyword-params (seq)
   (let ((res nil))

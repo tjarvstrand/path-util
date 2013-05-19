@@ -125,14 +125,15 @@ add a trailing directory separator)."
     (should (string= "foo" (path-util-join "foo")))
     (should (string= "foo/bar" (path-util-join "foo" "bar")))
     (should (string= "foo/bar" (path-util-join "foo" "bar")))
-    (should (string= "foo//bar" (path-util-join "foo/" "bar")))
+    (should (string= "foo/bar" (path-util-join "foo/" "bar")))
     (should (string=
              (file-name-as-directory
               (expand-file-name
                (directory-file-name default-directory)))
              (path-util-join "" :expand t)))
     (should-not (path-util-join nil :expand t))
-    (should (string= (concat (expand-file-name "~") "/foo")
+    (should (string= (file-name-as-directory
+                      (concat (expand-file-name "~") "/foo"))
                      (path-util-join "~" "foo" :expand t))))
 
   (ert-deftest path-util--remove-keyword-params-test ()

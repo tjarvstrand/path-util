@@ -127,7 +127,9 @@ add a trailing directory separator)."
     (should (string= "foo/bar" (path-util-join "foo" "bar")))
     (should (string= "foo//bar" (path-util-join "foo/" "bar")))
     (should (string=
-             (expand-file-name (directory-file-name default-directory))
+             (file-name-as-directory
+              (expand-file-name
+               (directory-file-name default-directory)))
              (path-util-join "" :expand t)))
     (should-not (path-util-join nil :expand t))
     (should (string= (concat (expand-file-name "~") "/foo")

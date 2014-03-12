@@ -1,6 +1,15 @@
+;;; path-util.el --- Path handling utilities
+;;
 ;; Copyright 2013 Thomas Järvstrand <tjarvstrand@gmail.com>
 ;;
-;; This file is part of path-util.
+;; Author: Thomas Järvstrand
+;; URL: https://github.com/tjarvstrand/path-util
+;; Version: 0.0.1
+;; Created: 2013-01-12
+;;
+;; This file is NOT part of GNU Emacs
+;;
+;;; License:
 ;;
 ;; path-util is free software: you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -14,8 +23,8 @@
 ;;
 ;; You should have received a copy of the GNU General Public License
 ;; along with path-util. If not, see <http://www.gnu.org/licenses/>.
-;;
-;; Path handling utilities
+
+;;; Code:
 
 (require 'cl)
 
@@ -144,3 +153,4 @@ add a trailing directory separator)."
     (should (equal '(a a) (path-util--remove-keyword-params '(a :foo bar a))))))
 
 (provide 'path-util)
+;;; path-util.el ends here
